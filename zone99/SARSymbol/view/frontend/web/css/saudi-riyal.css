@@ -1,0 +1,104 @@
+/**
+ * Saudi Riyal Currency Symbol Styles
+ * 
+ * @category  zone99
+ * @package   zone99_SARSymbol
+ * @author    Saudi Riyal Currency Extension
+ * @copyright Copyright (c) 2024
+ */
+
+/* Load Saudi Riyal Custom Font */
+@font-face {
+    font-family: 'saudi_riyal';
+    src: url('../fonts/saudi-riyal.woff') format('woff'),
+         url('../fonts/saudi-riyal.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Saudi Riyal Currency Symbol */
+.saudi-riyal-symbol {
+    font-family: 'saudi_riyal', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Currency Symbol in Price Display */
+.price .saudi-riyal-symbol,
+.price-box .saudi-riyal-symbol,
+.price-wrapper .saudi-riyal-symbol {
+    font-family: 'saudi_riyal', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Cart and Checkout Currency Symbols */
+.cart-summary .saudi-riyal-symbol,
+.checkout-summary .saudi-riyal-symbol,
+.minicart .saudi-riyal-symbol {
+    font-family: 'saudi_riyal', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Product Page Currency Symbols */
+.product-info-price .saudi-riyal-symbol,
+.product-price .saudi-riyal-symbol {
+    font-family: 'saudi_riyal', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Category Page Currency Symbols */
+.product-item .saudi-riyal-symbol,
+.product-items .saudi-riyal-symbol {
+    font-family: 'saudi_riyal', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* Admin Panel Currency Symbols */
+.admin__control-text .saudi-riyal-symbol,
+.admin__field .saudi-riyal-symbol {
+    font-family: 'saudi_riyal', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* General Currency Symbol Styling */
+.currency-sar .saudi-riyal-symbol,
+span.saudi-riyal-symbol,
+.saudi-riyal-currency {
+    font-family: 'saudi_riyal', Arial, sans-serif;
+    font-weight: normal;
+    font-style: normal;
+    display: inline;
+}
+
+/* Hide periods that might appear after currency symbols */
+.saudi-riyal-symbol + .period,
+.saudi-riyal-currency .saudi-riyal-symbol::after {
+    display: none !important;
+}
+
+/* Target specific pattern where period appears after symbol in HTML */
+.saudi-riyal-currency {
+    position: relative;
+}
+
+/* Responsive Font Loading */
+@media (max-width: 768px) {
+    .saudi-riyal-symbol {
+        font-size: inherit;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .saudi-riyal-symbol {
+        font-family: 'saudi_riyal', Arial, sans-serif;
+        -webkit-print-color-adjust: exact;
+        color-adjust: exact;
+    }
+} 

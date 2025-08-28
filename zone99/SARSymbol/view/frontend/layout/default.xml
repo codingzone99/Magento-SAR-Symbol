@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * zone99_SARSymbol Default Layout
+ * 
+ * @category  zone99
+ * @package   zone99_SARSymbol
+ * @author    Saudi Riyal Currency Extension
+ * @copyright Copyright (c) 2024
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <!-- Load Saudi Riyal CSS -->
+        <css src="zone99_SARSymbol::css/saudi-riyal.css"/>
+    </head>
+    <body>
+        <!-- Add currency conversion blocks for global use -->
+        <referenceContainer name="before.body.end">
+            <block class="zone99\SARSymbol\Block\Currency" 
+                   name="saudi.riyal.currency.converter" 
+                   template="zone99_SARSymbol::currency/converter.phtml" />
+        </referenceContainer>
+    </body>
+</page> 

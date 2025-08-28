@@ -1,0 +1,167 @@
+<?php
+/**
+ * Saudi Riyal Currency Converter Template
+ * 
+ * @category  zone99
+ * @package   zone99_SARSymbol
+ * @author    Saudi Riyal Currency Extension
+ * @copyright Copyright (c) 2024
+ * @var \zone99\SARSymbol\Block\Currency $block
+ * @var \zone99\SARSymbol\Helper\Data $helper
+ */
+
+$helper = $this->helper('zone99\SARSymbol\Helper\Data');
+?>
+
+<?php if ($helper->isSaudiRiyal()): ?>
+<script type="text/javascript">
+require(['jquery', 'domReady!'], function($) {
+    'use strict';
+    
+    /**
+     * Saudi Riyal Currency Symbol Converter
+     * Converts standard SAR symbols to custom font symbols
+     */
+    function convertSaudiRiyalSymbols() {
+        // List of SAR symbols to replace
+        var sarSymbols = ['﷼', 'SAR', 'ر.س'];
+        var customSymbol = '<?= $helper->getCustomSymbolHtml() ?>';
+        
+        // Find all text nodes and replace SAR symbols
+        function replaceInTextNodes(element) {
+            var walker = document.createTreeWalker(
+                element,
+                NodeFilter.SHOW_TEXT,
+                null,
+                false
+            );
+            
+            var textNodesToReplace = [];
+            var node;
+            
+            while (node = walker.nextNode()) {
+                var text = node.textContent;
+                var hasSymbol = false;
+                
+                sarSymbols.forEach(function(symbol) {
+                    if (text.indexOf(symbol) !== -1) {
+                        hasSymbol = true;
+                    }
+                });
+                
+                if (hasSymbol) {
+                    textNodesToReplace.push(node);
+                }
+            }
+            
+            // Replace symbols in collected text nodes
+            textNodesToReplace.forEach(function(textNode) {
+                var text = textNode.textContent;
+                var newText = text;
+                
+                sarSymbols.forEach(function(symbol) {
+                    var regex = new RegExp(symbol.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g');
+                    newText = newText.replace(regex, '<?= $helper::CUSTOM_SAR_SYMBOL ?>');
+                });
+                
+                if (newText !== text) {
+                    var span = document.createElement('span');
+                    span.innerHTML = newText.replace(/<?= preg_quote($helper::CUSTOM_SAR_SYMBOL, '/') ?>/g, customSymbol);
+                    span.className = '<?= $helper->addSaudiRiyalClass() ?>';
+                    
+                    textNode.parentNode.replaceChild(span, textNode);
+                }
+            });
+        }
+        
+        // Convert symbols in price elements
+        var priceSelectors = [
+            '.price',
+            '.price-box',
+            '.price-wrapper',
+            '.product-price',
+            '.cart-summary',
+            '.checkout-summary',
+            '.minicart',
+            '.totals'
+        ];
+        
+        priceSelectors.forEach(function(selector) {
+            $(selector).each(function() {
+                replaceInTextNodes(this);
+            });
+        });
+        
+        // Add CSS class to price containers
+        $(priceSelectors.join(', ')).addClass('saudi-riyal-currency');
+    }
+    
+    // Additional cleanup function for periods after symbols
+    function cleanupPeriodsAfterSymbols() {
+        $('.saudi-riyal-currency').each(function() {
+            var $container = $(this);
+            var html = $container.html();
+            var originalHtml = html;
+            
+            // Target the exact pattern from user's example
+            html = html.replace(
+                /<span class="saudi-riyal-symbol"><\/span>\.‏/g,
+                '<span class="saudi-riyal-symbol">&#xE900;</span>'
+            );
+            
+            // Handle filled symbol spans too
+            html = html.replace(
+                /<span class="saudi-riyal-symbol">&#xE900;<\/span>\.‏?/g,
+                '<span class="saudi-riyal-symbol">&#xE900;</span>'
+            );
+            
+            if (html !== originalHtml) {
+                $container.html(html);
+            }
+        });
+    }
+    
+    // Initial conversion
+    convertSaudiRiyalSymbols();
+    setTimeout(cleanupPeriodsAfterSymbols, 100);
+    
+    // Re-convert when new content is loaded (AJAX)
+    $(document).on('contentUpdated', function() {
+        convertSaudiRiyalSymbols();
+        setTimeout(cleanupPeriodsAfterSymbols, 100);
+    });
+    
+    // Monitor for dynamically added content
+    if (window.MutationObserver) {
+        var observer = new MutationObserver(function(mutations) {
+            var shouldConvert = false;
+            
+            mutations.forEach(function(mutation) {
+                if (mutation.type === 'childList' && mutation.addedNodes.length > 0) {
+                    for (var i = 0; i < mutation.addedNodes.length; i++) {
+                        var node = mutation.addedNodes[i];
+                        if (node.nodeType === Node.ELEMENT_NODE) {
+                            // Check if added node contains price elements
+                            var priceElements = node.querySelectorAll('.price, .price-box, .totals');
+                            if (priceElements.length > 0 || node.classList.contains('price')) {
+                                shouldConvert = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            });
+            
+            if (shouldConvert) {
+                setTimeout(convertSaudiRiyalSymbols, 100);
+            }
+        });
+        
+        observer.observe(document.body, {
+            childList: true,
+            subtree: true
+        });
+    }
+});
+</script>
+<?php endif; ?> 
