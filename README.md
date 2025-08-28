@@ -132,7 +132,7 @@ zone99/SARSymbol/
 - **Namespace:** zone99\SARSymbol
 - **Version:** 1.0.0
 - **Author:** zone99
-- **License:** MIT
+- **License:** GPLv3
 
 ## Browser Support
 
@@ -206,7 +206,7 @@ $helper = $this->helper('zone99\SARSymbol\Helper\Data');
 
 ## License
 
-MIT License - see LICENSE file for details
+GPLv3 License
 
 ## Support
 
