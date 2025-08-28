@@ -12,6 +12,8 @@ This Magento 2 extension replaces the standard Saudi Riyal (SAR) currency symbol
 - ✅ Print-friendly styling
 - ✅ Easy installation and configuration
 - ✅ Enhanced period removal for clean display
+- ✅ Tested on V2.4.7, V2.4.8
+
 
 ## Installation
 
@@ -162,36 +164,13 @@ zone99/SARSymbol/
    php bin/magento module:status zone99_SARSymbol
    ```
 
-### Unwanted Periods Still Appearing
-The extension includes enhanced period removal. If issues persist:
-1. Clear static content and redeploy:
-   ```bash
-   php bin/magento setup:static-content:deploy
-   ```
-2. Check for theme-specific currency formatting
-3. Verify no custom CSS is interfering
 
 ### Performance Issues
 1. Enable CSS/JS minification
 2. Use a CDN for static assets
 3. Enable browser caching
 
-## Development
 
-### Testing
-Create a test file to verify font loading:
-```html
-<!DOCTYPE html>
-<html>
-<head>
-    <link rel="stylesheet" href="path/to/saudi-riyal.css">
-</head>
-<body>
-    <span style="font-family: 'saudi_riyal'">&#xE900;</span>
-    Price: SAR 120
-</body>
-</html>
-```
 
 ### Customization
 To modify the symbol or add new replacements:
@@ -232,13 +211,13 @@ MIT License - see LICENSE file for details
 ## Support
 
 For support and questions:
-- Email: support@zone99.com
+- Email: contact@99.zone
 - Module: zone99/sar-symbol
 
 ## Changelog
 
 ### Version 1.0.0
-- Initial release with zone99 branding
+- Initial release
 - Custom font symbol support
 - Automatic symbol replacement
 - Enhanced period removal functionality
